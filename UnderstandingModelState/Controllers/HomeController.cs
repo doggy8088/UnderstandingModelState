@@ -49,16 +49,20 @@ namespace UnderstandingModelState.Controllers
             ModelState.AddModelError(
                 "Password", "您輸入的帳號或密碼錯誤，請重新輸入！");
 
-            if (!ModelState.IsValidField("Password"))
+            foreach (var model in ModelState)
             {
-                var emptyValue = new ValueProviderResult(
-                    string.Empty,
-                    string.Empty,
-                    System.Globalization.CultureInfo.CurrentCulture);
+                if (!ModelState.IsValidField(model.Key))
+                {
+                    object raw = model.Value.Value.RawValue;
+                    string str = model.Value.Value.AttemptedValue;
 
-                ModelState.SetModelValue(
-                    "Password",
-                    emptyValue);
+                    foreach (var err in model.Value.Errors)
+                    {
+                        var errExc = err.Exception;
+                        var errMsg = err.ErrorMessage;
+
+                    }
+                }
             }
 
             return View();
