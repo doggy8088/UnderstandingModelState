@@ -49,13 +49,21 @@ namespace UnderstandingModelState.Controllers
             ModelState.AddModelError(
                 "Password", "您輸入的帳號或密碼錯誤，請重新輸入！");
 
-            ModelState.Clear();
+            if (!ModelState.IsValidField("Email"))
+            {
+                ModelState.Remove("Email");
+            }
 
             return View();
         }
 
         private bool LoginCheck(LoginViewModel login)
         {
+            if (login.Email != "test@example.com" )
+            {
+                ModelState.AddModelError("Email", "帳號輸入錯誤");
+            }
+
             return (
                 login.Email == "test@example.com" &&
                 login.Password == "123"
