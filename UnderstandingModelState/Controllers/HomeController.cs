@@ -49,6 +49,8 @@ namespace UnderstandingModelState.Controllers
             ModelState.AddModelError(
                 "Password", "您輸入的帳號或密碼錯誤，請重新輸入！");
 
+            ModelState.Clear();
+
             return View();
         }
 
